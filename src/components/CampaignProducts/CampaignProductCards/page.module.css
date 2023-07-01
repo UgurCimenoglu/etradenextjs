@@ -1,0 +1,63 @@
+.mySwiper {
+  width: 300px;
+  height: 460px;
+  margin: 50px 0;
+}
+
+.mySwiperSlide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  /* color: #383636; */
+  color: #e8e8e8;
+  border: 0.1px solid rgb(121, 121, 121);
+  /* background: linear-gradient(
+    180deg,
+    rgb(170, 169, 169) 33%,
+    rgb(230, 230, 230) 100%
+  ); */
+  background-color: white;
+}
+/*
+.mySwiperSlide:nth-child(odd) {
+  background-color: rgb(255, 255, 255);
+}
+
+.mySwiperSlide:nth-child(even) {
+  background-color: rgb(255, 255, 255);
+} */
+
+/* .mySwiperSlide:nth-child(3n) {
+  background-color: rgb(10, 184, 111);
+}
+
+.mySwiperSlide:nth-child(4n) {
+  background-color: rgb(211, 122, 7);
+}
+
+.mySwiperSlide:nth-child(5n) {
+  background-color: rgb(118, 163, 12);
+}
+
+.mySwiperSlide:nth-child(6n) {
+  background-color: rgb(180, 10, 47);
+}
+
+.mySwiperSlide:nth-child(7n) {
+  background-color: rgb(35, 99, 19);
+}
+
+.mySwiperSlide:nth-child(8n) {
+  background-color: rgb(0, 68, 255);
+}
+
+.mySwiperSlide:nth-child(9n) {
+  background-color: rgb(218, 12, 218);
+}
+
+.mySwiperSlide:nth-child(10n) {
+  background-color: rgb(54, 94, 77);
+} */

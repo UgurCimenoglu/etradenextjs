@@ -1,0 +1,19 @@
+.footerLink ul > li {
+  list-style-type: none;
+  text-decoration: none;
+  margin: 1rem;
+}
+.footerLink ul > li > a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.social {
+  font-size: 3rem;
+  margin: 0.3rem;
+  opacity: 1;
+  cursor: pointer;
+}
+.social:hover {
+  opacity: 0.8;
+}
