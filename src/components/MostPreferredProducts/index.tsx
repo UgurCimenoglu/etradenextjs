@@ -16,16 +16,14 @@ import { Container } from "@mui/material";
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function CampaignProducts() {
+export default function MostPreferredProducts() {
   return (
     <Container maxWidth="xl">
-      <CustomPaper title="Kampanyalı Ürünler" />
+      <CustomPaper title="En Çok Tercih Edilen Ürünler" />
       <Swiper
         slidesPerView={4}
         spaceBetween={30}
-        autoplay={{
-          delay: 5000,
-        }}
+        autoplay
         loop={true}
         color="black"
         modules={[Autoplay]}

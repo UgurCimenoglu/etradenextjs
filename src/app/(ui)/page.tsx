@@ -1,6 +1,7 @@
 "use client";
 import CampaignProducts from "@/components/CampaignProducts";
 import HomeCarousel from "@/components/HomeCarousel";
+import MostPreferredProducts from "@/components/MostPreferredProducts";
 import React from "react";
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
     <>
       <HomeCarousel />
       <CampaignProducts />
+      <MostPreferredProducts />
     </>
   );
 };
