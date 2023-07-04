@@ -1,5 +1,5 @@
 body {
-  transition: .7s ease all;
+  transition: 0.7s ease all;
 }
 :root {
   --swiper-navigation-color: white !important;

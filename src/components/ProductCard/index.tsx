@@ -14,19 +14,20 @@ type ProductCardType = {
 
 export function ProductCard(props: ProductCardType) {
   return (
-    <Card sx={{ width: "100%", height: "100%",cursor:"pointer" }}>
+    <Card sx={{ width: "100%", height: "100%", cursor: "pointer" }}>
       <CardMedia component="img" alt="photo" image={props.imgUrl} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          Asus Rog Strix
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over
+          AMD Ryzen 5 5600 / ASUS Dual GeForce RTX 4070 OC 12GB WHITE / 16GB RAM
+          / 500GB M.2 SSD
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+      <CardActions sx={{display:"flex",justifyContent:"space-between", padding:"15px"}}>
+        <span>19.999 ₺</span>
+        <Button variant="outlined" color="inherit" >Sepete ekle</Button>
       </CardActions>
     </Card>
   );

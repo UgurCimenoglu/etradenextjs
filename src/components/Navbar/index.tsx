@@ -6,11 +6,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import useThemeStore from "@/contexts/ThemeContext";
-import { DarkModeSwitch } from "react-toggle-dark-mode";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AccountCircle } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import useSidebarToggleStore from "@/contexts/MobileSideBarToggleContext";
+import useSidebarToggleStore from "@/store/MobileSideBarToggleStore";
 import MenuIcon from "@mui/icons-material/Menu";
 import DarkModeToggle from "../DarkModeToggle";
 
@@ -110,10 +109,26 @@ export default function SearchAppBar() {
               justifyContent: "center",
               alignItems: "center",
               marginLeft: "20px",
-              gap: ".5rem",
             }}
           >
-            <DarkModeToggle />
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <DarkModeToggle />
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <ShoppingCartIcon />
+            </IconButton>
             <IconButton
               size="large"
               aria-label="account of current user"

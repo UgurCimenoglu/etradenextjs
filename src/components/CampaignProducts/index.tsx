@@ -21,7 +21,7 @@ export default function CampaignProducts() {
     <Container maxWidth="xl">
       <CustomPaper title="Kampanyalı Ürünler" />
       <Swiper
-        slidesPerView={4}
+        slidesPerView={5}
         spaceBetween={30}
         autoplay={{
           delay: 5000,

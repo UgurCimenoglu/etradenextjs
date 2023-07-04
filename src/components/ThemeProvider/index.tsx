@@ -15,9 +15,9 @@ import {
   blueGrey,
   lightBlue,
   blue,
-  common
+  common,
 } from "@mui/material/colors";
-import useThemeStore from "@/contexts/ThemeContext";
+import useThemeStore from "@/store/ThemeStore";
 
 const MyThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const { theme } = useThemeStore();
@@ -50,6 +50,20 @@ const getTheme = (theme: "dark" | "light"): Theme => {
         enteringScreen: 1225,
         // recommended when something is leaving screen
         leavingScreen: 1195,
+      },
+    },
+    components: {
+      MuiOutlinedInput: {
+        styleOverrides: {
+          input: {
+            "&:-webkit-autofill": {
+              "-webkit-box-shadow": `0 0 0 100px ${
+                theme === "dark" ? "#6F6F6F" : "var(--primary-weak)"
+              } inset`,
+              "-webkit-text-fill-color": "var(--text-primary)",
+            },
+          },
+        },
       },
     },
   });

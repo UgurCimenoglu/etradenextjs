@@ -1,4 +1,4 @@
-import useThemeStore from "@/contexts/ThemeContext";
+import useThemeStore from "@/store/ThemeStore";
 import React from "react";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
