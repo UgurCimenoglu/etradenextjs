@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
 import useSidebarToggleStore from "@/store/MobileSideBarToggleStore";
+import Link from "next/link";
 
 interface Props {
   /**
@@ -104,10 +105,12 @@ export default function DrawerAppBar(props: Props) {
                 alignItems: "center",
               }}
             >
-              {pages.map((item) => (
-                <Button key={item} sx={{ color: "#fff" }}>
-                  {item}
-                </Button>
+              {pages.map((item,i) => (
+                <Link key={i} href={"/products"}>
+                  <Button key={i} sx={{ color: "#fff" }}>
+                    {item}
+                  </Button>
+                </Link>
               ))}
             </Box>
           </Toolbar>

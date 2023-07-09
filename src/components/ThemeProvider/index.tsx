@@ -57,10 +57,10 @@ const getTheme = (theme: "dark" | "light"): Theme => {
         styleOverrides: {
           input: {
             "&:-webkit-autofill": {
-              "-webkit-box-shadow": `0 0 0 100px ${
+              "WebkitBoxShadow": `0 0 0 100px ${
                 theme === "dark" ? "#6F6F6F" : "var(--primary-weak)"
               } inset`,
-              "-webkit-text-fill-color": "var(--text-primary)",
+              "WebkitTextFillColor": "var(--text-primary)",
             },
           },
         },

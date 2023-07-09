@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -12,6 +13,8 @@ import { IconButton } from "@mui/material";
 import useSidebarToggleStore from "@/store/MobileSideBarToggleStore";
 import MenuIcon from "@mui/icons-material/Menu";
 import DarkModeToggle from "../DarkModeToggle";
+import useAuthStore from "@/store/AuthStore";
+import Link from "next/link";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,8 +59,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+  console.log("navbar rendered");
   const { isOpen, openSideBar } = useSidebarToggleStore();
-
+  const { isAuth } = useAuthStore();
+  console.log(isAuth);
   const handleDrawerToggle = () => {
     openSideBar(isOpen === false ? true : false);
   };
@@ -73,17 +78,23 @@ export default function SearchAppBar() {
           }}
         >
           <div>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                flexGrow: 1,
-                display: { xs: "none", sm: "inline-block", md: "inline-block" },
-              }}
-            >
-              MUI
-            </Typography>
+            <Link href={"/"} style={{color:"inherit"}}>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  display: {
+                    xs: "none",
+                    sm: "inline-block",
+                    md: "inline-block",
+                  },
+                }}
+              >
+                UGUR 
+              </Typography>
+            </Link>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -136,7 +147,11 @@ export default function SearchAppBar() {
               aria-haspopup="true"
               color="inherit"
             >
-              <AccountCircle />
+              {isAuth ? (
+                <AccountCircle />
+              ) : (
+                <Link href={"/login"}>Giriş Yap</Link>
+              )}
             </IconButton>
           </div>
         </Toolbar>

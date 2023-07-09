@@ -3,10 +3,10 @@ import "./globals.css";
 import React from "react";
 import MyThemeProvider from "@/components/ThemeProvider";
 import SearchAppBar from "@/components/Navbar";
-import Container from "@mui/material/Container";
 import NavbarCategories from "@/components/Navbar/NavbarCategories";
 import Footer from "@/components/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export const metadata = {
   title: "Create Next App",
@@ -22,16 +22,22 @@ export default function RootLayout({
 }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <MyThemeProvider>
-        <html lang="en">
-          <body>
-            <NavbarCategories />
-            <SearchAppBar />
-            {children}
-            <Footer />
-          </body>
-        </html>
-      </MyThemeProvider>
+      <GoogleOAuthProvider
+        clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT as string}
+      >
+        <MyThemeProvider>
+          <html lang="en">
+            <body>
+              <SearchAppBar />
+              <NavbarCategories />
+              <div style={{minHeight:"100vh"}}>
+              {children}
+              </div>
+              <Footer />
+            </body>
+          </html>
+        </MyThemeProvider>
+      </GoogleOAuthProvider>
     </QueryClientProvider>
   );
 }

@@ -9,6 +9,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import Image from "next/image";
 
 const Footer = () => {
+  console.log("footer render")
   return (
     <Box
       sx={{

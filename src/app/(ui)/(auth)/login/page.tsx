@@ -1,37 +1,44 @@
 "use client";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import LoadingButton from "@mui/lab/LoadingButton";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import { useMutation } from "@tanstack/react-query";
 import { LoginRequest } from "@/services/Auth/login";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import GoogleLogin from "@/components/Login/GoogleLogin";
+import FacebookLogin from "@/components/Login/FacebookLogin";
 
 export default function Login() {
-  const { mutate, isLoading, data, error } = useMutation(LoginRequest);
+  const login = useMutation(LoginRequest, {
+    onError: () => {
+      alert("Başarısız Giriş");
+    },
+    onSuccess: () => {
+      alert("Başaılı Giriş");
+    },
+  });
 
   const schema = yup
     .object({
       usernameOrEmail: yup
         .string()
         .required("Lütfen zorunlu alanı doldurunuz!")
-        .email("Lütfen geçerli bir mail adresi giriniz!"),
+        .min(3, "Lütfen en az 3 karakter giriniz!"),
       password: yup
         .string()
         .required("Lütfen zorunlu alanı doldurunuz!")
-        .min(3, "Lütfen en z 3 karakterden oluşan şifrenizi giriniz!"),
+        .min(3, "Lütfen en az 3 karakterden oluşan şifrenizi giriniz!"),
     })
     .required();
 
@@ -44,9 +51,7 @@ export default function Login() {
   });
 
   const onSubmit = (data: any) => {
-    console.log(error);
-    console.log(data);
-    mutate({ usernameOrEmail: "sda", password: "sasd" });
+    login.mutate(data);
   };
 
   return (
@@ -96,14 +101,16 @@ export default function Login() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            loading={login.isLoading}
+            disabled={login.isLoading}
           >
             Sign In
-          </Button>
+          </LoadingButton>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -116,22 +123,8 @@ export default function Login() {
               </Link>
             </Grid>
           </Grid>
-          <Button
-            fullWidth
-            startIcon={<GoogleIcon />}
-            variant="outlined"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Google ile Giriş Yap
-          </Button>
-          <Button
-            fullWidth
-            startIcon={<FacebookIcon />}
-            variant="outlined"
-            sx={{ mb: 2 }}
-          >
-            Facebook ile Giriş Yap
-          </Button>
+          <GoogleLogin />
+          <FacebookLogin />
         </Box>
       </Box>
     </Container>
