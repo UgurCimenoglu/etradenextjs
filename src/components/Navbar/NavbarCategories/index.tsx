@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -105,11 +106,9 @@ export default function DrawerAppBar(props: Props) {
                 alignItems: "center",
               }}
             >
-              {pages.map((item,i) => (
+              {pages.map((item, i) => (
                 <Link key={i} href={"/products"}>
-                  <Button key={i} sx={{ color: "#fff" }}>
-                    {item}
-                  </Button>
+                  <Button sx={{ color: "#fff" }}>{item}</Button>
                 </Link>
               ))}
             </Box>

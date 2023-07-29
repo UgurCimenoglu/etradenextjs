@@ -1,4 +1,5 @@
 import useThemeStore from "@/store/ThemeStore";
+import { IconButton } from "@mui/material";
 import React from "react";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
@@ -8,13 +9,20 @@ const DarkModeToggle = () => {
     changeTheme(theme === "light" ? "dark" : "light");
   };
   return (
-    <DarkModeSwitch
-      onChange={changeCurrentTheme}
-      sunColor="#ffd800"
-      moonColor="white"
-      checked={theme === "dark" ? true : false}
-      style={{ cursor: "pointer" }}
-    />
+    <IconButton
+      size="large"
+      aria-label="dark-light theme"
+      color="inherit"
+      onClick={changeCurrentTheme}
+    >
+      <DarkModeSwitch
+        onChange={() => {}}
+        sunColor="#ffd800"
+        moonColor="white"
+        checked={theme === "dark" ? true : false}
+        style={{ cursor: "pointer" }}
+      />
+    </IconButton>
   );
 };
 

@@ -1,28 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import GoogleIcon from "@mui/icons-material/Google";
-import { GoogleLoginRequest } from "@/services/Auth/login";
-import { useMutation } from "@tanstack/react-query";
 import { useGoogleLogin } from "@react-oauth/google";
-import useAuthStore from "@/store/AuthStore";
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 const GoogleLogin = () => {
-  const { login } = useAuthStore();
-
-  const googleLogin = useMutation(GoogleLoginRequest, {
-    onError: () => {
-      alert("Başarısız Giriş");
-    },
-    onSuccess: (data) => {
-      login(data);
-      alert("Başaılı Giriş");
-      localStorage.setItem("token",JSON.stringify(data))
-    },
-  });
-
+  const [isLoadingGoogleBtn, setisLoadingGoogleBtn] = useState<boolean>(false);
   const googleLoginHandler = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      googleLogin.mutate({ code: tokenResponse.code });
+      var result = await signIn("custom-google-login", {
+        code: tokenResponse.code,
+        redirect: true,
+        callbackUrl: "/",
+      });
+      console.log("result", result);
+      if (!!result && !result.ok) {
+        toast("Beklenmeyen bir hata meydana geldi, lütfen tekrar deneyiniz.");
+      }
+      setisLoadingGoogleBtn(false);
+    },
+    onError: (e: any) => {
+      console.log(e);
+      setisLoadingGoogleBtn(false);
     },
     flow: "auth-code",
   });
@@ -33,9 +33,12 @@ const GoogleLogin = () => {
       startIcon={<GoogleIcon />}
       variant="outlined"
       sx={{ mt: 3, mb: 2 }}
-      onClick={() => googleLoginHandler()}
-      loading={googleLogin.isLoading}
-      disabled={googleLogin.isLoading}
+      onClick={() => {
+        googleLoginHandler();
+        setisLoadingGoogleBtn(true);
+      }}
+      loading={isLoadingGoogleBtn}
+      disabled={isLoadingGoogleBtn}
     >
       Google ile Giriş Yap
     </LoadingButton>

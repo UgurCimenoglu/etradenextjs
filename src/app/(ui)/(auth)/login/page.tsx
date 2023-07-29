@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -18,15 +18,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import GoogleLogin from "@/components/Login/GoogleLogin";
 import FacebookLogin from "@/components/Login/FacebookLogin";
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const login = useMutation(LoginRequest, {
-    onError: () => {
-      alert("Başarısız Giriş");
-    },
-    onSuccess: () => {
-      alert("Başaılı Giriş");
-    },
+    onError: () => {},
+    onSuccess: (data) => {},
   });
 
   const schema = yup
@@ -50,8 +48,17 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => {
-    login.mutate(data);
+  const onSubmit = async (data: any) => {
+    //login.mutate(data);
+    const result = await signIn("backend-login", {
+      usernameOrEmail: data.usernameOrEmail,
+      password: data.password,
+      redirect: true,
+      callbackUrl: "/",
+    });
+    if (!!result && !result.ok) {
+      toast("Kullanıcı adı veya şifre hatalı!");
+    }
   };
 
   return (
@@ -113,14 +120,10 @@ export default function Login() {
           </LoadingButton>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <Link href="#">Forgot password?</Link>
             </Grid>
             <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link href="/register">{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>
           <GoogleLogin />

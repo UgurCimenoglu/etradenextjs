@@ -7,14 +7,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AccountCircle } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { CircularProgress, IconButton } from "@mui/material";
 import useSidebarToggleStore from "@/store/MobileSideBarToggleStore";
 import MenuIcon from "@mui/icons-material/Menu";
 import DarkModeToggle from "../DarkModeToggle";
-import useAuthStore from "@/store/AuthStore";
 import Link from "next/link";
+import ShoppingCartToggle from "../ShoppingCart";
+import { signOut, useSession } from "next-auth/react";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,14 +59,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
-  console.log("navbar rendered");
   const { isOpen, openSideBar } = useSidebarToggleStore();
-  const { isAuth } = useAuthStore();
-  console.log(isAuth);
+
+  const { data, status } = useSession();
+
   const handleDrawerToggle = () => {
     openSideBar(isOpen === false ? true : false);
   };
 
+  const HandleLogOut = () => {
+    signOut();
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ boxShadow: "none" }}>
@@ -78,7 +81,7 @@ export default function SearchAppBar() {
           }}
         >
           <div>
-            <Link href={"/"} style={{color:"inherit"}}>
+            <Link href={"/"} style={{ color: "inherit" }}>
               <Typography
                 variant="h6"
                 noWrap
@@ -92,7 +95,7 @@ export default function SearchAppBar() {
                   },
                 }}
               >
-                UGUR 
+                UGUR
               </Typography>
             </Link>
             <IconButton
@@ -122,6 +125,8 @@ export default function SearchAppBar() {
               marginLeft: "20px",
             }}
           >
+            <DarkModeToggle />
+            <ShoppingCartToggle />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -129,26 +134,10 @@ export default function SearchAppBar() {
               aria-haspopup="true"
               color="inherit"
             >
-              <DarkModeToggle />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              {isAuth ? (
-                <AccountCircle />
+              {status === "loading" ? (
+                <CircularProgress color="inherit"/>
+              ) : status === "authenticated" ? (
+                <AccountCircle onClick={HandleLogOut} />
               ) : (
                 <Link href={"/login"}>Giriş Yap</Link>
               )}

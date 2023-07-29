@@ -21,19 +21,20 @@ export default function CampaignProducts() {
     <Container maxWidth="xl">
       <CustomPaper title="Kampanyalı Ürünler" />
       <Swiper
-        slidesPerView={5}
+        slidesPerView={3}
         spaceBetween={30}
         autoplay={{
           delay: 5000,
         }}
         loop={true}
-        color="black"
         modules={[Autoplay]}
-        className={styles.mySwiper}
       >
         {arr.map((a, i) => (
-          <SwiperSlide key={i} className={styles.mySwiperSlide}>
-            <ProductCard imgUrl="https://www.gaming.gen.tr/wp-content/uploads/2023/05/asus-tuf-gaming-gt301-gaminggentr-edition-rgb-temperli-cam-usb-3-2-mid-tower-kasa-600x600.jpg" />
+          <SwiperSlide key={i}>
+            <ProductCard
+              id={"s"}
+              imgUrl="https://www.gaming.gen.tr/wp-content/uploads/2023/05/asus-tuf-gaming-gt301-gaminggentr-edition-rgb-temperli-cam-usb-3-2-mid-tower-kasa-600x600.jpg"
+            />
           </SwiperSlide>
         ))}
       </Swiper>
