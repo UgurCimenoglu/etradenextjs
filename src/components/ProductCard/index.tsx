@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import AddToCartButton from "../AddToCartButton/AddToCartButton";
 
 type ProductCardType = {
   id: string;
@@ -28,7 +29,7 @@ export function ProductCard(props: ProductCardType) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Asus Rog Strix
+            {props.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             AMD Ryzen 5 5600 / ASUS Dual GeForce RTX 4070 OC 12GB WHITE / 16GB
@@ -44,9 +45,7 @@ export function ProductCard(props: ProductCardType) {
         }}
       >
         <strong>{props.price} ₺</strong>
-        <Button variant="outlined" color="inherit">
-          Sepete ekle
-        </Button>
+        <AddToCartButton productId={props.id} />
       </CardActions>
     </Card>
   );

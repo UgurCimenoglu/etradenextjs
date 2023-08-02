@@ -17,3 +17,18 @@
 .social:hover {
   opacity: 0.8;
 }
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  margin: 5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+  }
+  .contractedBanks {
+    display: none;
+  }
+}

@@ -53,6 +53,7 @@ const Product = () => {
                       }`
                     : "/default-product.png"
                 }
+                title={item.name}
               />
             </Grid>
           ))}

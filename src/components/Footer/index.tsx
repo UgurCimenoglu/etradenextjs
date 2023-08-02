@@ -9,7 +9,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import Image from "next/image";
 
 const Footer = () => {
-  console.log("footer render")
+  console.log("footer render");
   return (
     <Box
       sx={{
@@ -23,14 +23,7 @@ const Footer = () => {
       }}
     >
       <Paper elevation={3} variant="elevation">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-
-            margin: "5rem",
-          }}
-        >
+        <div className={styles.footer}>
           <div className={styles.footerLink}>
             <ul>
               <li>
@@ -122,7 +115,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div>
+              <div style={{display:"flex"}}>
                 <FacebookIcon
                   className={styles.social}
                   style={{ color: "#4267B2" }}
@@ -151,7 +144,7 @@ const Footer = () => {
             margin: "5rem",
           }}
         >
-          <Image src="/card-info.png" alt="img" width={600} height={30} />
+          <Image src="/card-info.png" alt="img" width={600} height={30} className={styles.contractedBanks} />
         </div>
       </Paper>
     </Box>

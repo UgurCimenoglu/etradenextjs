@@ -1,70 +1,71 @@
 "use client";
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { IconButton } from "@mui/material";
+import { Button, IconButton, Typography, styled } from "@mui/material";
 import styles from "./page.module.css";
+import CloseIcon from "@mui/icons-material/Close";
+import Link from "next/link";
+import ShoppingCards from "./ShoppingCard";
 
 export default function ShoppingCartToggle() {
-  const [state, setState] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [totalPrice, setTotalPrice] = React.useState<number | undefined>(0);
 
-  const list = () => (
-    <Box sx={{ width: 350 }} role="presentation">
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+  const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
+  }));
+
+  const handleOpentoCart = async () => {
+    setOpen(true);
+  };
 
   return (
     <div>
       <React.Fragment>
         <IconButton
           size="large"
-          onClick={() => setState(true)}
+          onClick={() => handleOpentoCart()}
           aria-haspopup="true"
           color="inherit"
         >
           <ShoppingCartIcon />
         </IconButton>
         <Drawer
-          open={state}
-          onClose={() => setState(false)}
+          open={open}
+          onClose={() => setOpen(false)}
           anchor="right"
           className={styles.body}
+          PaperProps={{
+            sx: { minWidth: { sm: "100%", md: "240px" } },
+          }}
         >
-          {list()}
+          <DrawerHeader>
+            <IconButton size="medium" onClick={() => setOpen(false)}>
+              <CloseIcon fontSize="medium" />
+            </IconButton>
+          </DrawerHeader>
+          <ShoppingCards setTotalPrice={setTotalPrice} />
+
+          {totalPrice && (
+            <DrawerHeader
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Typography variant="body1" component="div">
+                Toplam :{totalPrice}₺
+              </Typography>
+              <Link href={"/basket"}>
+                <Button variant="contained" onClick={() => setOpen(false)}>
+                  Alışverişi Tamamla
+                </Button>
+              </Link>
+            </DrawerHeader>
+          )}
         </Drawer>
       </React.Fragment>
     </div>

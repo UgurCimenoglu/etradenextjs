@@ -49,7 +49,6 @@ export default NextAuth({
         authToken: {},
       },
       async authorize(credentials, req) {
-        console.log("cewss", credentials?.authToken);
         var result = await FacebookLoginRequest({
           authToken: credentials?.authToken,
         });
@@ -58,7 +57,7 @@ export default NextAuth({
       },
     }),
     CredentialsProvider({
-      name: "CustomFacebookLogin",
+      name: "Refresh-TokenLogin",
       id: "refresh-token",
       credentials: {
         refreshToken: {},

@@ -1,3 +1,11 @@
 .body {
   transition: 0.1s ease all !important;
+  overflow-y: auto;
+}
+.card {
+  display: flex;
+  margin: 0.5rem 1rem 0.3rem 1rem;
+  padding: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  min-height: 7.5rem;
 }

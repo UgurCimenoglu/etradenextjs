@@ -21,7 +21,14 @@ export default function MostPreferredProducts() {
     <Container maxWidth="xl">
       <CustomPaper title="En Çok Tercih Edilen Ürünler" />
       <Swiper
-        slidesPerView={4}
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+          },
+          1024: {
+            slidesPerView: 4,
+          },
+        }}
         spaceBetween={30}
         autoplay
         loop={true}
@@ -31,7 +38,10 @@ export default function MostPreferredProducts() {
       >
         {arr.map((a, i) => (
           <SwiperSlide key={i} className={styles.mySwiperSlide}>
-            <ProductCard imgUrl="https://www.gaming.gen.tr/wp-content/uploads/2023/05/asus-tuf-gaming-gt301-gaminggentr-edition-rgb-temperli-cam-usb-3-2-mid-tower-kasa-600x600.jpg" />
+            <ProductCard
+              id={""}
+              imgUrl="https://www.gaming.gen.tr/wp-content/uploads/2023/05/asus-tuf-gaming-gt301-gaminggentr-edition-rgb-temperli-cam-usb-3-2-mid-tower-kasa-600x600.jpg"
+            />
           </SwiperSlide>
         ))}
       </Swiper>
