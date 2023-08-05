@@ -10,7 +10,9 @@ import ShoppingCards from "./ShoppingCard";
 
 export default function ShoppingCartToggle() {
   const [open, setOpen] = React.useState<boolean>(false);
-  const [totalPrice, setTotalPrice] = React.useState<number | undefined>(0);
+  const [totalPrice, setTotalPrice] = React.useState<number | undefined>(
+    undefined
+  );
 
   const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
@@ -52,19 +54,25 @@ export default function ShoppingCartToggle() {
           </DrawerHeader>
           <ShoppingCards setTotalPrice={setTotalPrice} />
 
-          {totalPrice && (
+          {!!totalPrice ? (
             <DrawerHeader
-              style={{ display: "flex", justifyContent: "space-between" }}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                margin: "0 10px",
+              }}
             >
               <Typography variant="body1" component="div">
                 Toplam :{totalPrice}₺
               </Typography>
               <Link href={"/basket"}>
                 <Button variant="contained" onClick={() => setOpen(false)}>
-                  Alışverişi Tamamla
+                  Sepete Git
                 </Button>
               </Link>
             </DrawerHeader>
+          ) : (
+            <p>Sepet Boş</p>
           )}
         </Drawer>
       </React.Fragment>

@@ -10,9 +10,10 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import ShoppingCards from "@/components/ShoppingCart/ShoppingCard";
+import CreateOrderDialog from "@/components/CustomDialog/CreateOrderDialog";
 
 const Basket = () => {
-  const [totalPrice, setTotalPrice] = useState<number | undefined>(0);
+  const [totalPrice, setTotalPrice] = useState<number | undefined>(undefined);
   return (
     <Container maxWidth="xl" sx={{ mt: "2rem", margin: "auto" }}>
       <Grid container sx={{ justifyContent: "center" }} spacing={3}>
@@ -20,7 +21,7 @@ const Basket = () => {
           <ShoppingCards setTotalPrice={setTotalPrice} />
         </Grid>
         <Grid item xs={12} md={3}>
-          {totalPrice && (
+          {!!totalPrice && (
             <Card sx={{ margin: "1rem" }}>
               <CardContent>
                 <Typography component="div" variant="h6">
@@ -43,9 +44,7 @@ const Basket = () => {
                 <Typography variant="body1" component="div">
                   Toplam :{totalPrice}₺
                 </Typography>
-                <Button variant="contained" onClick={() => {}}>
-                  Tamamla
-                </Button>
+                <CreateOrderDialog />
               </CardActions>
             </Card>
           )}

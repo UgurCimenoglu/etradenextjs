@@ -14,8 +14,10 @@ type RegisterResponse = {
 export const RegisterRequest = async (
   registerRequest: Partial<RegisterRequest>
 ) => {
-  const response = await (
+  return await (
     await AxiosInstance()
-  ).post<RegisterResponse>("/Users", JSON.stringify(registerRequest));
-  return response.data;
+  )
+    .post<RegisterResponse>("/Users", JSON.stringify(registerRequest))
+    .then((res) => res.data)
+    .catch((e) => e);
 };

@@ -11,10 +11,12 @@ type LoginResponse = {
 export const LoginRequest = async (
   loginRequerst: Partial<LoginRequset>
 ): Promise<LoginResponse> => {
-  const response = await (
+  return await (
     await AxiosInstance()
-  ).post<LoginResponse>("/auth/login", JSON.stringify(loginRequerst));
-  return response.data;
+  )
+    .post<LoginResponse>("/auth/login", JSON.stringify(loginRequerst))
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type GoogleLoginRequest = {
@@ -23,11 +25,15 @@ type GoogleLoginRequest = {
 export const GoogleLoginRequest = async (
   googleLoginRequest: Partial<GoogleLoginRequest>
 ) => {
-  const response = await (await AxiosInstance()).post<LoginResponse>(
-    "/auth/google-login-v2",
-    JSON.stringify(googleLoginRequest)
-  );
-  return response.data;
+  return await (
+    await AxiosInstance()
+  )
+    .post<LoginResponse>(
+      "/auth/google-login-v2",
+      JSON.stringify(googleLoginRequest)
+    )
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type FacebookLoginRequest = {
@@ -36,11 +42,15 @@ type FacebookLoginRequest = {
 export const FacebookLoginRequest = async (
   facebookLoginRequest: Partial<FacebookLoginRequest>
 ) => {
-  const response =await (await AxiosInstance()).post<LoginResponse>(
-    "/auth/facebook-login",
-    JSON.stringify(facebookLoginRequest)
-  );
-  return response.data;
+  return await (
+    await AxiosInstance()
+  )
+    .post<LoginResponse>(
+      "/auth/facebook-login",
+      JSON.stringify(facebookLoginRequest)
+    )
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type RefreshTokenRequest = {
@@ -49,9 +59,13 @@ type RefreshTokenRequest = {
 export const RefreshTokenLogin = async (
   refreshTokenRequest: Partial<RefreshTokenRequest>
 ) => {
-  const response = await(await AxiosInstance()).post<LoginResponse>(
-    "/auth/RefreshToken",
-    JSON.stringify(refreshTokenRequest)
-  );
-  return response.data;
+  return await (
+    await AxiosInstance()
+  )
+    .post<LoginResponse>(
+      "/auth/RefreshToken",
+      JSON.stringify(refreshTokenRequest)
+    )
+    .then((res) => res.data)
+    .catch((e) => e);
 };

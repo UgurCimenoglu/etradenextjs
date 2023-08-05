@@ -33,10 +33,11 @@ export default function RootLayout({
               <body>
                 <ProgressProvider>
                   <ToastContainer />
-                  <SearchAppBar />
+                  {children}
+                  {/* <SearchAppBar />
                   <NavbarCategories />
                   <div style={{ minHeight: "100vh" }}>{children}</div>
-                  <Footer />
+                  <Footer /> */}
                 </ProgressProvider>
               </body>
             </html>

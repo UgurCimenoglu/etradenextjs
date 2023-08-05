@@ -9,10 +9,12 @@ type AddToCartResponse = {};
 export const AddToCart = async (
   addToCartRequest: Partial<AddToCartRequest>
 ): Promise<AddToCartResponse> => {
-  const response = await (
+  return await (
     await AxiosInstance()
-  ).post<AddToCartResponse>("Baskets", JSON.stringify(addToCartRequest));
-  return response.data;
+  )
+    .post<AddToCartResponse>("Baskets", JSON.stringify(addToCartRequest))
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type GetCurrentBasketResponse = {
@@ -25,10 +27,12 @@ type GetCurrentBasketResponse = {
 export const GetCurrentBasket = async (): Promise<
   GetCurrentBasketResponse[]
 > => {
-  const response = await (
+  return await (
     await AxiosInstance()
-  ).get<GetCurrentBasketResponse[]>("Baskets");
-  return response.data;
+  )
+    .get<GetCurrentBasketResponse[]>("Baskets")
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type UpdateBasketQuantityRequest = {
@@ -40,10 +44,12 @@ type UpdateBasketQuantityResponse = {};
 export const UpdateQuantity = async (
   updateBasketQuantity: UpdateBasketQuantityRequest
 ): Promise<UpdateBasketQuantityResponse> => {
-  const response = await (
+  return await (
     await AxiosInstance()
-  ).put("Baskets", JSON.stringify(updateBasketQuantity));
-  return response.data;
+  )
+    .put("Baskets", JSON.stringify(updateBasketQuantity))
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type DeleteProductFromBasketRequest = {
@@ -53,8 +59,10 @@ type DeleteProductFromBasketResponse = {};
 export const DeleteProductFromBasket = async (
   DeleteProductFromBasketRequest: DeleteProductFromBasketRequest
 ): Promise<DeleteProductFromBasketResponse> => {
-  const response = await (
+  return await (
     await AxiosInstance()
-  ).delete(`Baskets/${DeleteProductFromBasketRequest.basketItemId}`);
-  return response.data;
+  )
+    .delete(`Baskets/${DeleteProductFromBasketRequest.basketItemId}`)
+    .then((res) => res.data)
+    .catch((e) => e);
 };

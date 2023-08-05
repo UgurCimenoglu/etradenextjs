@@ -12,12 +12,14 @@ type GetProductResponse = {
 export const GetProducts = async (
   getProductRequest: Partial<GetProductRequest>
 ): Promise<GetProductResponse> => {
-  const response = await (
+  return await (
     await AxiosInstance()
-  ).get<GetProductResponse>(
-    `/products?page=${getProductRequest.page}&size=${getProductRequest.size}`
-  );
-  return response.data;
+  )
+    .get<GetProductResponse>(
+      `/products?page=${getProductRequest.page}&size=${getProductRequest.size}`
+    )
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type GetProductByIdRequest = {
@@ -31,10 +33,12 @@ type GetProductByIdResponse = {
 export const GetProductById = async (
   getProductById: GetProductByIdRequest
 ): Promise<GetProductByIdResponse> => {
-  const response = await (await AxiosInstance()).get<GetProductByIdResponse>(
-    `/products/${getProductById.id}`
-  );
-  return response.data;
+  return await (
+    await AxiosInstance()
+  )
+    .get<GetProductByIdResponse>(`/products/${getProductById.id}`)
+    .then((res) => res.data)
+    .catch((e) => e);
 };
 
 type GetProductImageRequest = {
@@ -49,8 +53,12 @@ type GetProductImageResponse = {
 export const GetProductImageById = async (
   getProductImageById: GetProductImageRequest
 ): Promise<GetProductImageResponse[]> => {
-  const response = await(await AxiosInstance()).get<GetProductImageResponse[]>(
-    `/products/getproductimages/${getProductImageById.id}`
-  );
-  return response.data;
+  return await (
+    await AxiosInstance()
+  )
+    .get<GetProductImageResponse[]>(
+      `/products/getproductimages/${getProductImageById.id}`
+    )
+    .then((res) => res.data)
+    .catch((e) => e);
 };
