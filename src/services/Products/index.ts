@@ -62,3 +62,35 @@ export const GetProductImageById = async (
     .then((res) => res.data)
     .catch((e) => e);
 };
+
+type UploadImageRequest = {
+  formData: FormData;
+  id: string;
+};
+export const UploadImage = async (data: Partial<UploadImageRequest>) => {
+  return await (
+    await AxiosInstance()
+  )
+    .post(`/Products/Upload?id=${data.id}`, data.formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then((res) => res.data)
+    .catch((e) => e);
+};
+
+type DeleteImageRequest = {
+  id: string;
+  imageId: string;
+};
+type DeleteImageResponse = {};
+
+export const DeleteImage = async (
+  data: Partial<DeleteImageRequest>
+): Promise<DeleteImageResponse> => {
+  return await (
+    await AxiosInstance()
+  )
+    .delete(`/Products/deleteProductImage/${data.id}?imageId=${data.imageId}`)
+    .then((res) => res.data)
+    .catch((e) => e);
+};
