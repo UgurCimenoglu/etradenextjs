@@ -63,6 +63,23 @@ export const GetProductImageById = async (
     .catch((e) => e);
 };
 
+type AddProductRequest = {
+  name: string;
+  price: number;
+  stock: number;
+};
+type AddProductResponse = {};
+export const AddProduct = async (
+  data: Partial<AddProductRequest>
+): Promise<AddProductResponse> => {
+  return await (
+    await AxiosInstance()
+  )
+    .post<AddProductResponse>("/Products", JSON.stringify(data))
+    .then((res) => res)
+    .catch((e) => e);
+};
+
 type UploadImageRequest = {
   formData: FormData;
   id: string;
@@ -78,12 +95,26 @@ export const UploadImage = async (data: Partial<UploadImageRequest>) => {
     .catch((e) => e);
 };
 
+type DeleteProductRequest = {
+  id: string;
+};
+type DeleteProductResponse = {};
+export const DeleteProduct = async (
+  data: Partial<DeleteProductRequest>
+): Promise<DeleteProductResponse> => {
+  return await (
+    await AxiosInstance()
+  )
+    .delete(`/Products/${data.id}`)
+    .then((res) => res.data)
+    .catch((e) => e);
+};
+
 type DeleteImageRequest = {
   id: string;
   imageId: string;
 };
 type DeleteImageResponse = {};
-
 export const DeleteImage = async (
   data: Partial<DeleteImageRequest>
 ): Promise<DeleteImageResponse> => {
@@ -92,5 +123,41 @@ export const DeleteImage = async (
   )
     .delete(`/Products/deleteProductImage/${data.id}?imageId=${data.imageId}`)
     .then((res) => res.data)
+    .catch((e) => e);
+};
+
+type UpdateProductRequest = {
+  id: string;
+  name: string;
+  price: number;
+  stock: number;
+};
+type UpdateProductResponse = {};
+export const UpdateProduct = async (
+  data: Partial<UpdateProductRequest>
+): Promise<UpdateProductResponse> => {
+  return await (
+    await AxiosInstance()
+  )
+    .put<UpdateProductResponse>("/Products", JSON.stringify(data))
+    .then((res) => res)
+    .catch((e) => e);
+};
+
+type ChangeShowCaseImageRequest = {
+  productId: string;
+  imageId: string;
+};
+type ChangeShowCaseImageResponse = {};
+export const ChangeShowCaseImage = async (
+  data: Partial<ChangeShowCaseImageRequest>
+): Promise<ChangeShowCaseImageResponse> => {
+  return await (
+    await AxiosInstance()
+  )
+    .get<ChangeShowCaseImageResponse>(
+      `Products/ChangeShowCaseImage?productId=${data.productId}&imageId=${data.imageId}`
+    )
+    .then((res) => res)
     .catch((e) => e);
 };

@@ -29,6 +29,7 @@ const Product = () => {
   ) => {
     setCurrentPage(value);
     mutate({ page: value - 1, size: pageSize });
+    window.scrollTo(0, 0); // sayfa her değiştiğinde en yukarı scroll olması için eklendi.
   };
 
   if (isLoading) {
@@ -45,7 +46,7 @@ const Product = () => {
                 price={item.price}
                 id={item.id}
                 imgUrl={
-                  (item.productImageFiles?.length as number) > 0 &&            
+                  (item.productImageFiles?.length as number) > 0 &&
                   item.productImageFiles?.some((x) => x.showCase === true)
                     ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${
                         item.productImageFiles?.find((p) => p.showCase === true)

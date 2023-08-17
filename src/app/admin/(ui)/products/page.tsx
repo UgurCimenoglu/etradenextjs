@@ -1,7 +1,7 @@
 "use client";
 import DataTable from "@/components/DataTable";
 import { GetProducts } from "@/services/Products";
-import { IconButton } from "@mui/material";
+import { Backdrop, Button, CircularProgress, IconButton } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import {
   MUIDataTableColumn,
@@ -9,15 +9,28 @@ import {
   MUIDataTableOptions,
   MUIDataTableState,
 } from "mui-datatables";
-import React, { lazy, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import moment from "moment";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddProductPhotoDialog from "@/components/CustomDialog/UploadProductImageDialog";
 import { List_Product } from "@/contracts/products/list_product";
+import CircularProgressIcon from "@/components/CircularProgress";
+import dynamic from "next/dynamic";
+import AddProductDialog from "@/components/CustomDialog/AddProductDialog";
 
 const AdminProducts = () => {
+  //lazy
+  const DeleteProductDialog = dynamic(
+    () => import("@/components/CustomDialog/DeleteProductDialog")
+  );
+  const EditProductDialog = dynamic(
+    () => import("@/components/CustomDialog/EditProductDialog")
+  );
+  const AddProductPhotoDialog = dynamic(
+    () => import("@/components/CustomDialog/UploadProductImageDialog")
+  );
+
   const { mutate, data, isLoading } = useMutation(GetProducts, {
     onError: () => {
       alert("Ürünler Listelendirken Hata Meydana Geldi");
@@ -26,26 +39,52 @@ const AdminProducts = () => {
       console.log("Ürünler Listelendi.");
     },
   });
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [addPhotoOpen, setAddPhotoOpen] = useState<boolean>(false);
+  const [addProductOpen, setAddProductOpen] = useState<boolean>(false);
+  const [updateProductOpen, setUpdateProductOpen] = useState<boolean>(false);
+  const [deleteProductOpen, setDeleteProductOpen] = useState<boolean>(false);
   const [currentProductId, setCurrentProductId] = useState<string | null>(null);
   const [pageSize] = useState<number>(12);
 
   useEffect(() => {
-    mutate({ page: 0, size: pageSize });
+    getProducts();
   }, []);
 
-  const handleeAddPhoto = (id: string) => {
+  const getProducts = () => {
+    mutate({ page: 0, size: pageSize });
+  };
+
+  const handleAddPhoto = (id: string) => {
     setCurrentProductId(id);
     setAddPhotoOpen(true);
   };
 
-  const changePageHandler = (
-    event: React.ChangeEvent<unknown>,
-    value: number
+  const handleDeleteProduct = (id: string) => {
+    setCurrentProductId(id);
+    setDeleteProductOpen(true);
+  };
+
+  const handleUpdateProduct = (id: string) => {
+    setCurrentProductId(id);
+    setUpdateProductOpen(true);
+  };
+
+  const onTableChangeHandle = (
+    action: string,
+    tableState: MUIDataTableState
   ) => {
-    setCurrentPage(value);
-    mutate({ page: value - 1, size: pageSize });
+    console.log(tableState);
+    switch (action) {
+      case "changePage":
+        mutate({ page: tableState.page, size: pageSize });
+        setCurrentPage(tableState.page);
+        break;
+
+      default:
+        break;
+    }
   };
 
   const columns: MUIDataTableColumn[] = [
@@ -108,7 +147,7 @@ const AdminProducts = () => {
       },
     },
     {
-      label: "Add/Update Photo",
+      label: "Photo",
       name: "addphoto",
       options: {
         filter: false,
@@ -118,7 +157,7 @@ const AdminProducts = () => {
           { rowData }: MUIDataTableMeta<List_Product>
         ) => {
           return (
-            <IconButton onClick={() => handleeAddPhoto(rowData[0])}>
+            <IconButton onClick={() => handleAddPhoto(rowData[0])}>
               <AddAPhotoIcon />
             </IconButton>
           );
@@ -131,9 +170,12 @@ const AdminProducts = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (value: any) => {
+        customBodyRender: (
+          value: any,
+          { rowData }: MUIDataTableMeta<List_Product>
+        ) => {
           return (
-            <IconButton>
+            <IconButton onClick={() => handleUpdateProduct(rowData[0])}>
               <BorderColorIcon />
             </IconButton>
           );
@@ -146,9 +188,12 @@ const AdminProducts = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (value: any) => {
+        customBodyRender: (
+          value: any,
+          { rowData }: MUIDataTableMeta<List_Product>
+        ) => {
           return (
-            <IconButton>
+            <IconButton onClick={() => handleDeleteProduct(rowData[0])}>
               <DeleteIcon />
             </IconButton>
           );
@@ -176,17 +221,26 @@ const AdminProducts = () => {
     expandableRowsOnClick: false,
     pagination: true,
     expandableRowsHeader: false,
-    count: 12,
+    count: data?.totalCount,
     serverSide: true,
-    page: currentPage - 1,
+    page: currentPage,
     textLabels: {
       body: {
-        noMatch: "Data Yok",
+        noMatch: isLoading ? (
+          <CircularProgressIcon sx={{ width: "100%" }} />
+        ) : (
+          "Data Yok"
+        ),
       },
     },
     onTableChange(action, tableState: MUIDataTableState) {
-      //onTableChangeHandle(action, tableState);
+      onTableChangeHandle(action, tableState);
     },
+    customToolbar: () => (
+      <Button onClick={() => setAddProductOpen(true)} variant="contained">
+        Add Product
+      </Button>
+    ),
   };
 
   return (
@@ -197,6 +251,7 @@ const AdminProducts = () => {
         title="Products"
         options={options}
       />
+
       {currentProductId && (
         <AddProductPhotoDialog
           isOpen={addPhotoOpen}
@@ -205,6 +260,32 @@ const AdminProducts = () => {
           onOk={() => {}}
         />
       )}
+
+      {currentProductId && (
+        <DeleteProductDialog
+          isOpen={deleteProductOpen}
+          setIsOpen={setDeleteProductOpen}
+          productId={currentProductId}
+          onOk={() => {
+            getProducts();
+          }}
+        />
+      )}
+      {currentProductId && (
+        <EditProductDialog
+          isOpen={updateProductOpen}
+          setIsOpen={setUpdateProductOpen}
+          productId={currentProductId}
+          onOk={() => {
+            getProducts();
+          }}
+        />
+      )}
+      <AddProductDialog
+        isOpen={addProductOpen}
+        setIsOpen={setAddProductOpen}
+        onOk={() => getProducts()}
+      />
     </>
   );
 };

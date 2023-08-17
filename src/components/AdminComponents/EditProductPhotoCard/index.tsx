@@ -1,22 +1,32 @@
-import { Card, CardMedia, CardActions, Button } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardActions,
+  Button,
+  FormControlLabel,
+  Radio,
+} from "@mui/material";
 import React from "react";
 
 type Props = {
   imgUrl: string;
   onDelete: () => void;
+  showCase: boolean;
+  changeShowCase: () => void;
 };
 
 const EditProductPhotoCard = (props: Props) => {
+  console.log(props);
   return (
     <Card sx={{ maxWidth: 200 }}>
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        image={props.imgUrl}
-      />
+      <CardMedia component="img" alt="product_photo" image={props.imgUrl} />
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button size="small">Share</Button>
+        <FormControlLabel
+          checked={props.showCase}
+          onClick={props.changeShowCase}
+          control={<Radio />}
+          label="Ürün Varsaylan Görseli Seç"
+        />
         <Button
           size="small"
           color="error"

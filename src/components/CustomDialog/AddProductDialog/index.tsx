@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -7,15 +6,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AddProduct, GetProductById } from "@/services/Products";
+import * as yup from "yup";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { LoadingButton } from "@mui/lab";
 import { Box, TextField } from "@mui/material";
-import { CreateOrder } from "@/services/Order";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { LoadingButton } from "@mui/lab";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -30,13 +28,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export interface DialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-}
-
-function BootstrapDialogTitle(props: DialogTitleProps) {
+function BootstrapDialogTitle(props: any) {
   const { children, onClose, ...other } = props;
 
   return (
@@ -45,7 +37,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
       {onClose ? (
         <IconButton
           aria-label="close"
-          onClick={onClose}
+          onClick={props.onClose}
           sx={{
             position: "absolute",
             right: 8,
@@ -60,67 +52,77 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   );
 }
 
-export default function CreateOrderDialog() {
-  const [open, setOpen] = React.useState(false);
-  const router = useRouter();
-
-  const createOrder = useMutation(CreateOrder, {
+type CustomDialogProps = {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onOk: () => void;
+};
+export default function AddProductDialog(props: CustomDialogProps) {
+  const addProduct = useMutation(AddProduct, {
     onError: () => {},
     onSuccess: (data) => {
-      toast.info("Siparişiniz Oluşturuldu!");
-      router.push("/");
+      props.onOk();
+      reset();
+      props.setIsOpen(false);
+      toast.info("Ürün Eklendi.");
     },
   });
 
   const schema = yup
     .object({
-      address: yup
+      name: yup
         .string()
         .required("Lütfen zorunlu alanı doldurunuz!")
-        .min(10, "Lütfen en az 10 karakter giriniz!"),
-      description: yup.string().nullable(),
+        .min(1, "Lütfen en az 1 karakter giriniz!"),
+
+      stock: yup
+        .number()
+        .positive("Stok miktarı 1'den az olamaz")
+        .typeError("Stok miktarı 1'den az olamaz"),
+
+      price: yup
+        .number()
+        .positive("Ürünün fiyatı 1₺'den az olamaz")
+        .typeError("Ürünün fiyatı 1₺'den az olamaz"),
     })
     .required();
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: any) => {
-    console.log("dataaa", data);
-    await createOrder.mutateAsync({
-      address: data.address,
-      description: data.description || "",
+  const onSubmit = async (data: {
+    name: string;
+    stock: number | undefined;
+    price: number | undefined;
+  }) => {
+    await addProduct.mutateAsync({
+      name: data.name,
+      price: data.price,
+      stock: data.stock,
     });
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
-    setOpen(false);
+    props.setIsOpen(false);
   };
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickOpen}>
-        Tamamla
-      </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={props.isOpen}
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
-          Alışverişi Tamamla
+        <BootstrapDialogTitle onClose={handleClose}>
+          Add Product
         </BootstrapDialogTitle>
+
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
@@ -129,39 +131,42 @@ export default function CreateOrderDialog() {
         >
           <DialogContent dividers>
             <TextField
-              margin="normal"
-              multiline
-              rows={3}
               required
-              fullWidth
-              {...register("address")}
-              label="Address"
+              {...register("name")}
+              label="Product Name"
               autoFocus
-            />
-            <p>{errors.address?.message}</p>
-            <TextField
-              margin="normal"
-              multiline
-              rows={2}
               fullWidth
-              {...register("description")}
-              label="Description"
-              type="text"
-              id="description"
             />
-            <p>{errors.description?.message}</p>
+            <p>{errors.name?.message}</p>
+            <TextField
+              required
+              {...register("stock")}
+              label="Stock"
+              type="number"
+              fullWidth
+              InputProps={{ inputProps: { min: 1 } }}
+            />
+            <p>{errors.stock?.message}</p>
+            <TextField
+              {...register("price")}
+              label="Price"
+              type="number"
+              fullWidth
+              InputProps={{ inputProps: { min: 1 } }}
+            />
+            <p>{errors.price?.message}</p>
           </DialogContent>
-          
+
           <DialogActions>
             <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              loading={createOrder.isLoading}
-              disabled={createOrder.isLoading}
+              loading={addProduct.isLoading}
+              disabled={addProduct.isLoading}
             >
-              Sipariş Oluştur
+              Ürün Ekle
             </LoadingButton>
           </DialogActions>
         </Box>

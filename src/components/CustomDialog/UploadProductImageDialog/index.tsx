@@ -9,11 +9,15 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  ChangeShowCaseImage,
   DeleteImage,
   GetProductImageById,
   UploadImage,
 } from "@/services/Products";
 import EditProductPhotoCard from "@/components/AdminComponents/EditProductPhotoCard";
+import CircularProgressIcon from "@/components/CircularProgress";
+import { toast } from "react-toastify";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -59,6 +63,8 @@ type CustomDialogProps = {
   onOk: () => void;
 };
 export default function CustomizedDialogs(props: CustomDialogProps) {
+  const imgUploadRef = React.useRef<HTMLInputElement>(null);
+
   const productImage = useQuery({
     queryKey: ["ProductImage"],
     queryFn: async () =>
@@ -67,18 +73,20 @@ export default function CustomizedDialogs(props: CustomDialogProps) {
   const uploadImage = useMutation(UploadImage, {
     onError: () => {},
     onSuccess: (data) => {
-      console.log("okey", data);
+      toast.info("Görsel eklendi.");
     },
   });
   const deleteImage = useMutation(DeleteImage, {
     onError: () => {},
     onSuccess: (data) => {
-      alert("Görsel Silindi.");
+      toast.info("Görsel Silindi.");
     },
   });
-
-  React.useEffect(() => {
-    props.isOpen && productImage.refetch();
+  const changeShoCaseImage = useMutation(ChangeShowCaseImage, {
+    onError: () => {},
+    onSuccess: (data) => {
+      toast.info("Varsayılan ürün görseli değiştirildi.");
+    },
   });
 
   const handleClose = () => {
@@ -97,9 +105,17 @@ export default function CustomizedDialogs(props: CustomDialogProps) {
     });
   };
 
+  const onChangeShowCase = async (imageId: string, productId: string) => {
+    await changeShoCaseImage.mutateAsync({ productId, imageId });
+  };
+
   const onImgDelete = async (imageId: string) => {
     deleteImage.mutateAsync({ id: props.productId as string, imageId });
   };
+
+  React.useEffect(() => {
+    props.isOpen && productImage.refetch();
+  });
 
   return (
     <div>
@@ -111,22 +127,37 @@ export default function CustomizedDialogs(props: CustomDialogProps) {
         <BootstrapDialogTitle onClose={handleClose}>
           Add/Upload Photo
         </BootstrapDialogTitle>
+        <Button
+          variant="contained"
+          color="inherit"
+          startIcon={<AddAPhotoIcon />}
+          onClick={() => imgUploadRef.current?.click()}
+        >
+          Add Product Photo
+          <input
+            hidden
+            accept="image/*"
+            multiple
+            type="file"
+            onChange={onFileChange}
+            ref={imgUploadRef}
+          />
+        </Button>
+
         <DialogContent dividers>
-          <Button variant="contained" component="label">
-            Upload
-            <input
-              hidden
-              accept="image/*"
-              multiple
-              type="file"
-              onChange={onFileChange}
-            />
-          </Button>
+          {productImage.isLoading && (
+            <CircularProgressIcon sx={{ width: "100%" }} />
+          )}
+
           {productImage.data?.map((p, i) => (
             <EditProductPhotoCard
               imgUrl={p.path}
               key={i}
               onDelete={() => onImgDelete(p.id)}
+              showCase={p.showCase}
+              changeShowCase={() =>
+                onChangeShowCase(p.id, props.productId as string)
+              }
             />
           ))}
         </DialogContent>

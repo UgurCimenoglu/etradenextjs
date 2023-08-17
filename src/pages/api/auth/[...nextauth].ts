@@ -79,7 +79,7 @@ export default NextAuth({
     },
     async session({ session, token }) {
       session.user = token.token as any;
-      session.expires = "";
+      session.expires = (token.token as any).expiration;
       return session;
     },
   },
