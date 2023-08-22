@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import ShoppingCards from "@/components/ShoppingCart/ShoppingCard";
-import CreateOrderDialog from "@/components/CustomDialog/CreateOrderDialog";
+import CreateOrderDialog from "@/components/CustomDialog/Order/CreateOrderDialog";
 
 const Basket = () => {
   const [totalPrice, setTotalPrice] = useState<number | undefined>(undefined);

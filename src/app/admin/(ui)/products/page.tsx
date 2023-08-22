@@ -17,18 +17,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { List_Product } from "@/contracts/products/list_product";
 import CircularProgressIcon from "@/components/CircularProgress";
 import dynamic from "next/dynamic";
-import AddProductDialog from "@/components/CustomDialog/AddProductDialog";
+import AddProductDialog from "@/components/CustomDialog/Product/AddProductDialog";
 
 const AdminProducts = () => {
   //lazy
   const DeleteProductDialog = dynamic(
-    () => import("@/components/CustomDialog/DeleteProductDialog")
+    () => import("@/components/CustomDialog/Product/DeleteProductDialog")
   );
   const EditProductDialog = dynamic(
-    () => import("@/components/CustomDialog/EditProductDialog")
+    () => import("@/components/CustomDialog/Product/EditProductDialog")
   );
   const AddProductPhotoDialog = dynamic(
-    () => import("@/components/CustomDialog/UploadProductImageDialog")
+    () => import("@/components/CustomDialog/Product/UploadProductImageDialog")
   );
 
   const { mutate, data, isLoading } = useMutation(GetProducts, {
@@ -54,6 +54,7 @@ const AdminProducts = () => {
 
   const getProducts = () => {
     mutate({ page: 0, size: pageSize });
+    setCurrentPage(0)
   };
 
   const handleAddPhoto = (id: string) => {

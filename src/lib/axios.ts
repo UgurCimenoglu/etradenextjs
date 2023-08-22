@@ -1,5 +1,4 @@
-import { config } from "./../middleware";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { getSession, signIn, signOut } from "next-auth/react";
 const https = require("https");
 

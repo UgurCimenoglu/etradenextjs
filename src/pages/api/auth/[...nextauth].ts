@@ -6,6 +6,7 @@ import {
 } from "@/services/Auth/login";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { signOut } from "next-auth/react";
 
 export default NextAuth({
   providers: [
@@ -80,6 +81,8 @@ export default NextAuth({
     async session({ session, token }) {
       session.user = token.token as any;
       session.expires = (token.token as any).expiration;
+      if (Date.parse((token.token as any).expiration) < Date.now())
+        await signOut();
       return session;
     },
   },
