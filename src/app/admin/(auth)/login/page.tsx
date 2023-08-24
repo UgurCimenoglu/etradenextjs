@@ -54,7 +54,7 @@ export default function Login() {
       usernameOrEmail: data.usernameOrEmail,
       password: data.password,
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: "/admin/products",
     });
     if (!!result && !result.ok) {
       toast("Kullanıcı adı veya şifre hatalı!");

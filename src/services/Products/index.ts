@@ -22,6 +22,19 @@ export const GetProducts = async (
     .catch((e) => e);
 };
 
+export const GetAllProductsForAdmin = async (
+  getProductRequest: Partial<GetProductRequest>
+): Promise<GetProductResponse> => {
+  return await (
+    await AxiosInstance()
+  )
+    .get<GetProductResponse>(
+      `/products/GetAllForAdmin?page=${getProductRequest.page}&size=${getProductRequest.size}`
+    )
+    .then((res) => res.data)
+    .catch((e) => e);
+};
+
 type GetProductByIdRequest = {
   id: string;
 };

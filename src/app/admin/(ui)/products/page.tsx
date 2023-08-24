@@ -1,7 +1,7 @@
 "use client";
 import DataTable from "@/components/DataTable";
-import { GetProducts } from "@/services/Products";
-import { Backdrop, Button, CircularProgress, IconButton } from "@mui/material";
+import { GetAllProductsForAdmin } from "@/services/Products";
+import { Button, IconButton } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import {
   MUIDataTableColumn,
@@ -9,7 +9,7 @@ import {
   MUIDataTableOptions,
   MUIDataTableState,
 } from "mui-datatables";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -31,7 +31,7 @@ const AdminProducts = () => {
     () => import("@/components/CustomDialog/Product/UploadProductImageDialog")
   );
 
-  const { mutate, data, isLoading } = useMutation(GetProducts, {
+  const { mutate, data, isLoading } = useMutation(GetAllProductsForAdmin, {
     onError: () => {
       alert("Ürünler Listelendirken Hata Meydana Geldi");
     },
@@ -54,7 +54,7 @@ const AdminProducts = () => {
 
   const getProducts = () => {
     mutate({ page: 0, size: pageSize });
-    setCurrentPage(0)
+    setCurrentPage(0);
   };
 
   const handleAddPhoto = (id: string) => {
