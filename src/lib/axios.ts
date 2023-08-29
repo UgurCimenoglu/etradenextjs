@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getSession, signIn, signOut } from "next-auth/react";
+import { toast } from "react-toastify";
 const https = require("https");
 
 const backendUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -32,8 +33,14 @@ const AxiosInstance = async () => {
           }`;
           axiosIns(originalRequest);
         } else {
+          toast.error(
+            "Oturum süresi doldu, giriş ekranına yönlendiriliyorsunuz, lütfen tekrar giriş yapınız!"
+          );
           signOut({ callbackUrl: "/login", redirect: true });
         }
+      }
+      if (error.response?.status === 403) {
+        toast.error("Bu işlem için yetkiniz bulunmamaktadir!");
       }
     }
   );

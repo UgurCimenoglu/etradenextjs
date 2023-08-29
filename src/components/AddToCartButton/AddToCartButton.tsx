@@ -9,19 +9,20 @@ type Props = {
 };
 
 const AddToCartButton = (props: Props) => {
-  const addToCartRequest = useMutation(AddToCart, {
-    onSuccess: () => {
+  const { mutate, data, error, isError } = useMutation(AddToCart, {
+    onSuccess: (data) => {
       toast.success("Sepete Eklendi.", { position: "bottom-right" });
     },
-    onError: () => {},
+    onError: () => {
+      toast.error("Hata Meydana Geldi!");
+    },
   });
 
   const handleAddToCart = () => {
-    var res = addToCartRequest.mutate({
+    mutate({
       productId: props.productId,
       quantity: 1,
     });
-    console.log("addtocartres", res);
   };
   return (
     <Button variant="outlined" color="inherit" onClick={handleAddToCart}>

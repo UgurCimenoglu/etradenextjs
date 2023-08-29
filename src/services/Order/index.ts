@@ -16,7 +16,9 @@ export const CreateOrder = async (
   )
     .post<CreateOrderResponse>("Orders", JSON.stringify(createOrderRequest))
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GetOrdersRequest = {
@@ -37,7 +39,9 @@ export const GetOrders = async (
   )
     .get(`/Orders?page=${getOrdersRequest.page}&size=${getOrdersRequest.size}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GetOrderByIdRequest = {
@@ -52,7 +56,9 @@ export const GetOrderById = async (
   )
     .get<Order_Detail>(`Orders/${data.id}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type CompleteOrderRequest = {
@@ -68,5 +74,7 @@ export const CompleteOrder = async (
   )
     .get(`/Orders/complete-order/${data.id}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };

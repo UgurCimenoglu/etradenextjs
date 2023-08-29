@@ -7,6 +7,7 @@ import {
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { signOut } from "next-auth/react";
+import { toast } from "react-toastify";
 
 export default NextAuth({
   providers: [
@@ -25,6 +26,7 @@ export default NextAuth({
           usernameOrEmail: credentials?.usernameOrEmail,
           password: credentials?.password,
         });
+        console.log(result)
         if (result) return result as any;
         return null;
       },
@@ -81,8 +83,10 @@ export default NextAuth({
     async session({ session, token }) {
       session.user = token.token as any;
       session.expires = (token.token as any).expiration;
-      if (Date.parse((token.token as any).expiration) < Date.now())
+      if (Date.parse((token.token as any).expiration) < Date.now()) {
+        toast.error("Oturum süresi doldu, giriş ekranına yönlendiriliyorsunuz, lütfen tekrar giriş yapınız!");
         await signOut();
+      }
       return session;
     },
   },

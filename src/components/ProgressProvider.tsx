@@ -3,6 +3,7 @@
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
+  console.log("pprograss tetiklendi")
   return (
     <>
       <ProgressBar

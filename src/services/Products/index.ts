@@ -19,7 +19,34 @@ export const GetProducts = async (
       `/products?page=${getProductRequest.page}&size=${getProductRequest.size}`
     )
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
+};
+
+type GetProductByQueryRequest = {
+  page: number;
+  size: number;
+  q: string;
+};
+type GetProductByQueryResponse = {
+  totalCount: number;
+  products: List_Product[];
+  q: string;
+};
+export const GetProductsByQuery = async (
+  data: Partial<GetProductByQueryRequest>
+): Promise<GetProductByQueryResponse> => {
+  return await (
+    await AxiosInstance()
+  )
+    .get<GetProductByQueryResponse>(
+      `/Products/GetAllByQuery?q=${data.q}&page=${data.page}&size=${data.size}`
+    )
+    .then((res) => res.data)
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 export const GetAllProductsForAdmin = async (
@@ -32,7 +59,9 @@ export const GetAllProductsForAdmin = async (
       `/products/GetAllForAdmin?page=${getProductRequest.page}&size=${getProductRequest.size}`
     )
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GetProductByIdRequest = {
@@ -51,7 +80,9 @@ export const GetProductById = async (
   )
     .get<GetProductByIdResponse>(`/products/${getProductById.id}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GetProductImageRequest = {
@@ -73,7 +104,9 @@ export const GetProductImageById = async (
       `/products/getproductimages/${getProductImageById.id}`
     )
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type AddProductRequest = {
@@ -89,8 +122,10 @@ export const AddProduct = async (
     await AxiosInstance()
   )
     .post<AddProductResponse>("/Products", JSON.stringify(data))
-    .then((res) => res)
-    .catch((e) => e);
+    .then((res) => res.data)
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type UploadImageRequest = {
@@ -105,7 +140,9 @@ export const UploadImage = async (data: Partial<UploadImageRequest>) => {
       headers: { "Content-Type": "multipart/form-data" },
     })
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type DeleteProductRequest = {
@@ -120,7 +157,9 @@ export const DeleteProduct = async (
   )
     .delete(`/Products/${data.id}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type DeleteImageRequest = {
@@ -136,7 +175,9 @@ export const DeleteImage = async (
   )
     .delete(`/Products/deleteProductImage/${data.id}?imageId=${data.imageId}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type UpdateProductRequest = {
@@ -153,8 +194,10 @@ export const UpdateProduct = async (
     await AxiosInstance()
   )
     .put<UpdateProductResponse>("/Products", JSON.stringify(data))
-    .then((res) => res)
-    .catch((e) => e);
+    .then((res) => res.data)
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type ChangeShowCaseImageRequest = {
@@ -171,6 +214,8 @@ export const ChangeShowCaseImage = async (
     .get<ChangeShowCaseImageResponse>(
       `Products/ChangeShowCaseImage?productId=${data.productId}&imageId=${data.imageId}`
     )
-    .then((res) => res)
-    .catch((e) => e);
+    .then((res) => res.data)
+    .catch((e) => {
+      throw new Error(e);
+    });
 };

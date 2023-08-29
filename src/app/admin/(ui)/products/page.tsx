@@ -18,6 +18,7 @@ import { List_Product } from "@/contracts/products/list_product";
 import CircularProgressIcon from "@/components/CircularProgress";
 import dynamic from "next/dynamic";
 import AddProductDialog from "@/components/CustomDialog/Product/AddProductDialog";
+import { toast } from "react-toastify";
 
 const AdminProducts = () => {
   //lazy
@@ -33,7 +34,7 @@ const AdminProducts = () => {
 
   const { mutate, data, isLoading } = useMutation(GetAllProductsForAdmin, {
     onError: () => {
-      alert("Ürünler Listelendirken Hata Meydana Geldi");
+      toast.error("Ürünler Listelendirken Hata Meydana Geldi");
     },
     onSuccess: () => {
       console.log("Ürünler Listelendi.");

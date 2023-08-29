@@ -61,6 +61,7 @@ export default function AddProductDialog(props: CustomDialogProps) {
   const addProduct = useMutation(AddProduct, {
     onError: () => {},
     onSuccess: (data) => {
+      console.log("ccccc", data);
       props.onOk();
       reset();
       props.setIsOpen(false);

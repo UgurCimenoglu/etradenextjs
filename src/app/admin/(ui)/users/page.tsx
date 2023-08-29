@@ -12,11 +12,12 @@ import {
   MUIDataTableState,
 } from "mui-datatables";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Users = () => {
   const { mutate, data, isLoading } = useMutation(GetAllUsers, {
     onError: () => {
-      alert("Kullanıcılar Listelendirken Hata Meydana Geldi");
+      toast.error("Kullanıcılar Listelendirken Hata Meydana Geldi");
     },
     onSuccess: (data) => {
       console.log("Kullanıcılar Listelendi.");

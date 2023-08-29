@@ -18,7 +18,9 @@ export const GetRoles = async (
   )
     .get(`/roles?page=${data.page}&size=${data.size}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type AddRoleRequest = {
@@ -35,7 +37,9 @@ export const AddRole = async (
   )
     .post("/roles", JSON.stringify(data))
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type DeleteRoleRequest = {
@@ -52,5 +56,7 @@ export const DeleteRole = async (
   )
     .delete(`/roles/${data.id}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };

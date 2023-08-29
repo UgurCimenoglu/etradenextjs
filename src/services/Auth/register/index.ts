@@ -19,5 +19,7 @@ export const RegisterRequest = async (
   )
     .post<RegisterResponse>("/Users", JSON.stringify(registerRequest))
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };

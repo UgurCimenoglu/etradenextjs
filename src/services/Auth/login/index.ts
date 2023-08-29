@@ -16,7 +16,9 @@ export const LoginRequest = async (
   )
     .post<LoginResponse>("/auth/login", JSON.stringify(loginRequerst))
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GoogleLoginRequest = {
@@ -33,7 +35,9 @@ export const GoogleLoginRequest = async (
       JSON.stringify(googleLoginRequest)
     )
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type FacebookLoginRequest = {
@@ -50,7 +54,9 @@ export const FacebookLoginRequest = async (
       JSON.stringify(facebookLoginRequest)
     )
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type RefreshTokenRequest = {
@@ -67,5 +73,7 @@ export const RefreshTokenLogin = async (
       JSON.stringify(refreshTokenRequest)
     )
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };

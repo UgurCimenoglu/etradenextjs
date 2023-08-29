@@ -23,7 +23,9 @@ export const GetAllUsers = async (
   )
     .get(`/users?page=${data.page}&size=${data.size}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GetRolesRequest = {
@@ -45,7 +47,9 @@ export const GetAllRoles = async (
   )
     .get(`/roles?page=${data.page}&size=${data.size}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GetRolesByUserIdRequest = {
@@ -63,7 +67,9 @@ export const GetRolesByUserId = async (
   )
     .get<GetRolesByUserIdResponse>(`/users/get-roles-to-user/${data.userId}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type AssingRoleToUserRequest = {
@@ -79,5 +85,7 @@ export const AssingRoleToUser = async (
   )
     .post("/users/assign-role-to-user", JSON.stringify(data))
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };

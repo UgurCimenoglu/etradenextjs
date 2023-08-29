@@ -14,11 +14,12 @@ import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddRoleDialog from "@/components/CustomDialog/Role/AddRoleDialog";
 import DeleteRoleDialog from "@/components/CustomDialog/Role/DeleteRoleDialog";
+import { toast } from "react-toastify";
 
 const Roles = () => {
   const { mutate, data, isLoading } = useMutation(GetRoles, {
     onError: () => {
-      alert("Roller Listelendirken Hata Meydana Geldi");
+      toast.error("Roller Listelendirken Hata Meydana Geldi");
     },
     onSuccess: () => {
       console.log("Roller Listelendi.");

@@ -8,55 +8,15 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { AccountCircle } from "@mui/icons-material";
-import { CircularProgress, IconButton } from "@mui/material";
+import { Button, CircularProgress, IconButton } from "@mui/material";
 import useSidebarToggleStore from "@/store/MobileSideBarToggleStore";
 import MenuIcon from "@mui/icons-material/Menu";
 import DarkModeToggle from "../DarkModeToggle";
 import Link from "next/link";
 import ShoppingCartToggle from "../ShoppingCart";
 import { signOut, useSession } from "next-auth/react";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.1),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.1),
-  },
-  marginLeft: 0,
-  width: "80%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "70ch",
-      "&:focus": {
-        width: "80ch",
-      },
-    },
-  },
-}));
+import NavbarSearch from "./Search";
+import RightContent from "./RightContent";
 
 export default function SearchAppBar() {
   const { isOpen, openSideBar } = useSidebarToggleStore();
@@ -108,15 +68,7 @@ export default function SearchAppBar() {
               <MenuIcon />
             </IconButton>
           </div>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          <NavbarSearch />
           <div
             style={{
               display: "flex",
@@ -126,8 +78,8 @@ export default function SearchAppBar() {
             }}
           >
             <DarkModeToggle />
-            <ShoppingCartToggle />
-            <IconButton
+            {status === "authenticated" && <ShoppingCartToggle />}
+            {/* <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="primary-search-account-menu"
@@ -135,13 +87,20 @@ export default function SearchAppBar() {
               color="inherit"
             >
               {status === "loading" ? (
-                <CircularProgress color="inherit"/>
+                <CircularProgress color="inherit" />
               ) : status === "authenticated" ? (
                 <AccountCircle onClick={HandleLogOut} />
               ) : (
                 <Link href={"/login"}>Giriş Yap</Link>
               )}
-            </IconButton>
+            </IconButton> */}
+            {status === "loading" && <CircularProgress color="inherit" />}
+            {status === "authenticated" && <RightContent />}
+            {status === "unauthenticated" && (
+              <Link href={"/admin/login"}>
+                <Button color="inherit">Giriş Yap</Button>
+              </Link>
+            )}
           </div>
         </Toolbar>
       </AppBar>

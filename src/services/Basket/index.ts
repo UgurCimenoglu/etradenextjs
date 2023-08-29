@@ -14,7 +14,9 @@ export const AddToCart = async (
   )
     .post<AddToCartResponse>("Baskets", JSON.stringify(addToCartRequest))
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type GetCurrentBasketResponse = {
@@ -32,7 +34,9 @@ export const GetCurrentBasket = async (): Promise<
   )
     .get<GetCurrentBasketResponse[]>("Baskets")
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type UpdateBasketQuantityRequest = {
@@ -49,7 +53,9 @@ export const UpdateQuantity = async (
   )
     .put("Baskets", JSON.stringify(updateBasketQuantity))
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };
 
 type DeleteProductFromBasketRequest = {
@@ -64,5 +70,7 @@ export const DeleteProductFromBasket = async (
   )
     .delete(`Baskets/${DeleteProductFromBasketRequest.basketItemId}`)
     .then((res) => res.data)
-    .catch((e) => e);
+    .catch((e) => {
+      throw new Error(e);
+    });
 };

@@ -18,11 +18,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import OrderDetailDialog from "@/components/CustomDialog/Order/OrderDetailDialog";
+import { toast } from "react-toastify";
 
 const Orders = () => {
   const { mutate, data, isLoading } = useMutation(GetOrders, {
     onError: () => {
-      alert("Siparişler Listelendirken Hata Meydana Geldi");
+      toast.error("Siparişler Listelendirken Hata Meydana Geldi");
     },
     onSuccess: () => {
       console.log("Siparişler Listelendi.");

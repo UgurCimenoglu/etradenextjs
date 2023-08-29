@@ -1,25 +1,19 @@
 "use client";
 import { ProductCard } from "@/components/ProductCard";
 import ProductCardSkeleton from "@/components/Skeleton/Product/ProductCard";
-import { GetProducts, GetProductsByQuery } from "@/services/Products";
-import useSearchQueryKeyStore from "@/store/SearchQueryKeyStore";
+import { GetProductsByQuery } from "@/services/Products";
 import { Container, Grid, Pagination, Stack } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
-const Product = () => {
-  const { search, setSearch, setQueryKey, queryKey } = useSearchQueryKeyStore();
+const SearchQueryPage = () => {
+  const searchParams = useSearchParams();
 
-  const { mutate, data, isLoading } = useMutation(GetProducts, {
-    onError: () => {
-      toast.error("Ürünler Listelendirken Hata Meydana Geldi");
-    },
-    onSuccess: (data) => {
-      console.log("Ürünler Listelendi.");
-    },
-  });
-  const getProductsByQuery = useMutation(GetProductsByQuery, {
+  const q = searchParams?.get("q");
+
+  const { mutate, data, isLoading } = useMutation(GetProductsByQuery, {
     onError: () => {
       toast.error("Ürünler Listelendirken Hata Meydana Geldi");
     },
@@ -30,22 +24,26 @@ const Product = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize] = useState<number>(12);
 
+
+  useEffect(()=>{console.log("qqq",q)},[q])
+
   useEffect(() => {
-    mutate({ page: 0, size: pageSize });
-  }, []);
+    mutate({ page: 0, size: pageSize, q: q as string });
+  }, [q]);
 
   const changePageHandler = (
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
+    console.log(value)
     setCurrentPage(value);
-    if (search)
-      getProductsByQuery.mutate({
-        page: value,
+    if (q)
+      mutate({
+        page: value-1,
         size: pageSize,
-        q: queryKey,
+        q: q,
       });
-    mutate({ page: value - 1, size: pageSize });
+
     window.scrollTo(0, 0); // sayfa her değiştiğinde en yukarı scroll olması için eklendi.
   };
 
@@ -98,4 +96,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default SearchQueryPage;

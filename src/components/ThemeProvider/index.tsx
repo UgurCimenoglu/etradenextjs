@@ -38,19 +38,19 @@ const getTheme = (theme: "dark" | "light"): Theme => {
       fontFamily: ["Archivo Variable", "sans-serif"].join(","),
     },
     transitions: {
-      duration: {
-        shortest: 150,
-        shorter: 200,
-        short: 250,
-        // most basic recommended timing
-        standard: 1300,
-        // this is to be used in complex animations
-        complex: 1375,
-        // recommended when something is entering screen
-        enteringScreen: 1225,
-        // recommended when something is leaving screen
-        leavingScreen: 1195,
-      },
+      // duration: {
+      //   shortest: 150,
+      //   shorter: 200,
+      //   short: 250,
+      //   // most basic recommended timing
+      //   standard: 1300,
+      //   // this is to be used in complex animations
+      //   complex: 1375,
+      //   // recommended when something is entering screen
+      //   enteringScreen: 1225,
+      //   // recommended when something is leaving screen
+      //   leavingScreen: 1195,
+      // },
     },
     components: {
       MuiOutlinedInput: {

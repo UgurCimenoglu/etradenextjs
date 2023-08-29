@@ -24,9 +24,10 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Link from "next/link";
 import AccountMenu from "../DrawerRightContent";
 import { useSession } from "next-auth/react";
-import { Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Container, Tooltip } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LockPersonIcon from "@mui/icons-material/LockPerson";
 
 export default function AdminDrawer({
   children,
@@ -97,30 +98,31 @@ export default function AdminDrawer({
         <List>
           {drawerRouterList.map((data, index) => (
             <Link key={index} href={data.route}>
-              <ListItem key={index} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
+              <Tooltip title={data.name} placement="right" disableHoverListener={open}>
+                <ListItem key={index} disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
                     }}
                   >
-                    {data.icon}
-                  </ListItemIcon>
-
-                  <ListItemText
-                    primary={data.name}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {data.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={data.name}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Tooltip>
             </Link>
           ))}
         </List>
@@ -152,7 +154,9 @@ export default function AdminDrawer({
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {children}
+        <Container maxWidth="xl" sx={{ mt: "2rem" }}>
+          {children}
+        </Container>
       </Box>
     </Box>
   );
@@ -163,6 +167,7 @@ const drawerRouterList = [
   { name: "Orders", icon: <AddShoppingCartIcon />, route: "/admin/orders" },
   { name: "Users", icon: <GroupIcon />, route: "/admin/users" },
   { name: "Roles", icon: <ManageAccountsIcon />, route: "/admin/roles" },
+  { name: "Authorization Menu", icon: <LockPersonIcon />, route: "/admin/authorize-menu" },
 ];
 
 const drawerWidth = 240;

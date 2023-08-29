@@ -1,4 +1,5 @@
 "use client";
+import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
 import ProductImageCarousel from "@/components/ProductImageCarousel";
 import ProductDetailSkeleton from "@/components/Skeleton/Product/ProductDetail";
 import { GetProductById, GetProductImageById } from "@/services/Products";
@@ -44,9 +45,7 @@ const ProductDetail = ({ params }: any) => {
             <p>
               <strong>{productDetail.data?.price}</strong>₺
             </p>
-            <Button variant="outlined" color="inherit">
-              Sepete ekle
-            </Button>
+            <AddToCartButton productId={params.id}/>
           </div>
         </div>
         <TabContext value={value}>
