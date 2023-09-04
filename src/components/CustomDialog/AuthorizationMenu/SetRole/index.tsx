@@ -34,7 +34,7 @@ export default function AddAuthRoleDialog(props: CustomDialogProps) {
     onError: () => {},
     onSuccess: (data) => {
       console.log("currentroles", data.roles);
-      setCurrentUserRoles(data.roles);
+      setCurrentUserRoles(data.roles?.length > 0 ? data.roles : []);
     },
   });
 
@@ -51,6 +51,8 @@ export default function AddAuthRoleDialog(props: CustomDialogProps) {
   const [currentUserRoles, setCurrentUserRoles] = React.useState<string[]>([]);
 
   const handleRoleChange = (e: any) => {
+    console.log(e.target.value);
+    console.log("cyrrent", currentUserRoles);
     setCurrentUserRoles((prev) =>
       prev.includes(e.target.value)
         ? [...prev.filter((i) => i !== e.target.value)]
@@ -88,7 +90,7 @@ export default function AddAuthRoleDialog(props: CustomDialogProps) {
         open={props.isOpen}
       >
         <BootstrapDialogTitle onClose={handleClose}>
-          Delete Product
+          Assing Role
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <>

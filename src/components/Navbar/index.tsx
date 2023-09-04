@@ -97,7 +97,7 @@ export default function SearchAppBar() {
             {status === "loading" && <CircularProgress color="inherit" />}
             {status === "authenticated" && <RightContent />}
             {status === "unauthenticated" && (
-              <Link href={"/admin/login"}>
+              <Link href={"/login"}>
                 <Button color="inherit">Giriş Yap</Button>
               </Link>
             )}

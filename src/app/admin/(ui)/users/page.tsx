@@ -175,7 +175,7 @@ const Users = () => {
       <DataTable
         columns={columns}
         data={data?.users ? data.users : []}
-        title="Products"
+        title="Users"
         options={options}
       />
       {currentUserId && (

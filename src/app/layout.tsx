@@ -2,9 +2,6 @@
 import "./globals.css";
 import React from "react";
 import MyThemeProvider from "@/components/ThemeProvider";
-import SearchAppBar from "@/components/Navbar";
-import NavbarCategories from "@/components/Navbar/NavbarCategories";
-import Footer from "@/components/Footer";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ProgressProvider from "@/components/ProgressProvider";
 import { SessionProvider } from "next-auth/react";
@@ -34,10 +31,6 @@ export default function RootLayout({
                 <ProgressProvider>
                   <ToastContainer />
                   {children}
-                  {/* <SearchAppBar />
-                  <NavbarCategories />
-                  <div style={{ minHeight: "100vh" }}>{children}</div>
-                  <Footer /> */}
                 </ProgressProvider>
               </body>
             </html>

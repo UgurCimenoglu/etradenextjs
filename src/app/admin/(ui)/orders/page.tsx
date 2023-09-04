@@ -21,7 +21,7 @@ import OrderDetailDialog from "@/components/CustomDialog/Order/OrderDetailDialog
 import { toast } from "react-toastify";
 
 const Orders = () => {
-  const { mutate, data, isLoading } = useMutation(GetOrders, {
+  const { mutate, mutateAsync, data, isLoading } = useMutation(GetOrders, {
     onError: () => {
       toast.error("Siparişler Listelendirken Hata Meydana Geldi");
     },
@@ -35,8 +35,12 @@ const Orders = () => {
   const [openOrderDetail, setOpenOrderDetail] = useState<boolean>(false);
   const [pageSize] = useState<number>(12);
 
+  const getOrders = async () => {
+    await mutateAsync({ page: currentPage, size: pageSize });
+  };
+
   useEffect(() => {
-    mutate({ page: currentPage, size: pageSize });
+    getOrders();
   }, [currentPage]);
 
   const onTableChangeHandle = (
@@ -221,7 +225,9 @@ const Orders = () => {
           id={currentOrderId}
           isOpen={openOrderDetail}
           setIsOpen={setOpenOrderDetail}
-          onOk={() => {}}
+          onOk={() => {
+            getOrders();
+          }}
         />
       )}
     </>

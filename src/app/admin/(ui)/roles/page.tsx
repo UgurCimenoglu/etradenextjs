@@ -81,21 +81,21 @@ const Roles = () => {
         sort: false,
       },
     },
-    {
-      label: "Delete",
-      name: "delete",
-      options: {
-        filter: false,
-        sort: false,
-        customBodyRender: (value: any, { rowData }: MUIDataTableMeta) => {
-          return (
-            <IconButton onClick={() => handleDeleteRole(rowData[0])}>
-              <DeleteIcon />
-            </IconButton>
-          );
-        },
-      },
-    },
+    // {
+    //   label: "Delete",
+    //   name: "delete",
+    //   options: {
+    //     filter: false,
+    //     sort: false,
+    //     customBodyRender: (value: any, { rowData }: MUIDataTableMeta) => {
+    //       return (
+    //         <IconButton onClick={() => handleDeleteRole(rowData[0])}>
+    //           <DeleteIcon />
+    //         </IconButton>
+    //       );
+    //     },
+    //   },
+    // },
   ];
 
   const options: MUIDataTableOptions | undefined = {

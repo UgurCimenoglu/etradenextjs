@@ -29,6 +29,7 @@ export default function OrderDetailDialog(props: CustomDialogProps) {
     onSuccess: () => {
       toast.info("Siapriş Tamamlandı.");
       props.setIsOpen(false);
+      props.onOk();
     },
     onError: () => {
       toast.error("Beklenmeyen Hata!");

@@ -40,6 +40,7 @@ export default function SetUserRoleDialog(props: CustomDialogProps) {
     onError: () => {},
     onSuccess: (data) => {
       toast.info("Kullanıcı Rolleri Atandı.");
+      props.setIsOpen(false);
     },
   });
 

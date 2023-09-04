@@ -19,6 +19,8 @@ import CircularProgressIcon from "@/components/CircularProgress";
 import dynamic from "next/dynamic";
 import AddProductDialog from "@/components/CustomDialog/Product/AddProductDialog";
 import { toast } from "react-toastify";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+
 
 const AdminProducts = () => {
   //lazy
@@ -41,6 +43,8 @@ const AdminProducts = () => {
     },
   });
 
+  const [connection, setConnection] = useState<null | HubConnection>(null);
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [addPhotoOpen, setAddPhotoOpen] = useState<boolean>(false);
   const [addProductOpen, setAddProductOpen] = useState<boolean>(false);
@@ -48,6 +52,27 @@ const AdminProducts = () => {
   const [deleteProductOpen, setDeleteProductOpen] = useState<boolean>(false);
   const [currentProductId, setCurrentProductId] = useState<string | null>(null);
   const [pageSize] = useState<number>(12);
+
+  // useEffect(() => {
+  //   const connect = new HubConnectionBuilder()
+  //     .withUrl("https://localhost:7245/products-hub")
+  //     .withAutomaticReconnect()
+  //     .build();
+  //   setConnection(connect);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (connection) {
+  //     connection
+  //       .start()
+  //       .then(() => {
+  //         connection.on("recieveProductAddedMessage", (message) => {
+  //           toast.info(message);
+  //         });
+  //       })
+  //       .catch((error) => console.log(error));
+  //   }
+  // }, [connection]);
 
   useEffect(() => {
     getProducts();
