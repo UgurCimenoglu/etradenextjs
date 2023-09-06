@@ -13,10 +13,14 @@ import { Autoplay } from "swiper";
 import { ProductCard } from "@/components/ProductCard/index";
 import CustomPaper from "../CustomPaper";
 import { Container } from "@mui/material";
+import { List_Product } from "@/contracts/products/list_product";
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function MostPreferredProducts() {
+type Props = {
+  products: List_Product[] | undefined;
+};
+export default function MostPreferredProducts(props: Props) {
   return (
     <Container maxWidth="xl">
       <CustomPaper title="En Çok Tercih Edilen Ürünler" />
@@ -36,11 +40,21 @@ export default function MostPreferredProducts() {
         modules={[Autoplay]}
         className={styles.mySwiper}
       >
-        {arr.map((a, i) => (
+        {props.products?.map((item, i) => (
           <SwiperSlide key={i} className={styles.mySwiperSlide}>
             <ProductCard
-              id={""}
-              imgUrl="https://www.gaming.gen.tr/wp-content/uploads/2023/05/asus-tuf-gaming-gt301-gaminggentr-edition-rgb-temperli-cam-usb-3-2-mid-tower-kasa-600x600.jpg"
+              price={item.price}
+              id={item.id}
+              imgUrl={
+                (item.productImageFiles?.length as number) > 0 &&
+                item.productImageFiles?.some((x) => x.showCase === true)
+                  ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${
+                      item.productImageFiles?.find((p) => p.showCase === true)
+                        ?.path
+                    }`
+                  : `/default-product-${Math.floor(Math.random() * 5 + 1)}.png`
+              }
+              title={item.name}
             />
           </SwiperSlide>
         ))}

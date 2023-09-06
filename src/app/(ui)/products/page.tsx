@@ -9,8 +9,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const Product = () => {
-  const { search, setSearch, setQueryKey, queryKey } = useSearchQueryKeyStore();
-
   const { mutate, data, isLoading } = useMutation(GetProducts, {
     onError: () => {
       toast.error("Ürünler Listelendirken Hata Meydana Geldi");
@@ -39,12 +37,6 @@ const Product = () => {
     value: number
   ) => {
     setCurrentPage(value);
-    if (search)
-      getProductsByQuery.mutate({
-        page: value,
-        size: pageSize,
-        q: queryKey,
-      });
     mutate({ page: value - 1, size: pageSize });
     window.scrollTo(0, 0); // sayfa her değiştiğinde en yukarı scroll olması için eklendi.
   };
@@ -69,7 +61,9 @@ const Product = () => {
                         item.productImageFiles?.find((p) => p.showCase === true)
                           ?.path
                       }`
-                    : "/default-product.png"
+                    : `/default-product-${Math.floor(
+                        Math.random() * 5 + 1
+                      )}.png`
                 }
                 title={item.name}
               />

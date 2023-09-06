@@ -43,7 +43,7 @@ const ProductImageCarousel = (props: Props) => {
       ) : (
         <SwiperSlide className={styles.swiperSlide}>
           <Image
-            src="/default-product.png"
+            src={`/default-product-${Math.floor(Math.random() * 5 + 1)}.png`}
             alt="default_photo"
             fill
             className={styles.carouselImg}

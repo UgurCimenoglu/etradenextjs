@@ -46,6 +46,10 @@ export default function Login() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      usernameOrEmail: "Ugur",
+      password: "123",
+    },
   });
 
   const onSubmit = async (data: any) => {
@@ -77,11 +81,14 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Giriş Yap
         </Typography>
+        <Typography component="p" variant="body1">
+          Default Account Username: Ugur , Password: 123
+        </Typography>
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          sx={{ mt: 1, width:"100%"}}
+          sx={{ mt: 1, width: "100%" }}
         >
           <TextField
             margin="normal"

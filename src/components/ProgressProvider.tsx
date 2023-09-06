@@ -3,9 +3,9 @@
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
-  console.log("pprograss tetiklendi")
+  console.log("pprograss tetiklendi");
   return (
-    <>
+    <div>
       <ProgressBar
         height="4px"
         color="#3fc8ff"
@@ -13,7 +13,7 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
         shallowRouting
       />
       {children}
-    </>
+    </div>
   );
 };
 

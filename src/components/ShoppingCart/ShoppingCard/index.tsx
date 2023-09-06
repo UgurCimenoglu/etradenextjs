@@ -84,7 +84,7 @@ const ShoppingCards = (props: Props) => {
               image={
                 p.image
                   ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${p.image}`
-                  : "/default-product.png"
+                  : `/default-product-${Math.floor(Math.random() * 5 + 1)}.png`
               }
               alt="product_photo"
             />

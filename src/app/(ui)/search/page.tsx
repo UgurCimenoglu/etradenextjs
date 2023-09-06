@@ -67,7 +67,7 @@ const SearchQueryPage = () => {
                         item.productImageFiles?.find((p) => p.showCase === true)
                           ?.path
                       }`
-                    : "/default-product.png"
+                    : `/default-product-${Math.floor(Math.random() * 5 + 1)}.png`
                 }
                 title={item.name}
               />

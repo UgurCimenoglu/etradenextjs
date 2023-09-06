@@ -32,8 +32,7 @@ export function ProductCard(props: ProductCardType) {
             {props.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            AMD Ryzen 5 5600 / ASUS Dual GeForce RTX 4070 OC 12GB WHITE / 16GB
-            RAM / 500GB M.2 SSD
+            Product Description
           </Typography>
         </CardContent>
       </Link>

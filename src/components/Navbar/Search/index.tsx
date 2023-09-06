@@ -39,7 +39,7 @@ const NavbarSearch = () => {
   );
 };
 
-export default NavbarSearch;
+export default React.memo(NavbarSearch);
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

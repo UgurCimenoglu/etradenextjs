@@ -19,6 +19,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  if (process.env.NODE_ENV === "production") {
+    console.warn = () => {};
+    console.error = () => {};
+    console.log = () => {};
+  }
+
   return (
     <SessionProvider>
       <CustomQueryClient>
