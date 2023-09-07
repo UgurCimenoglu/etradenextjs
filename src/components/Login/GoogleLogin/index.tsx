@@ -21,7 +21,6 @@ const GoogleLogin = () => {
       setisLoadingGoogleBtn(false);
     },
     onError: (e: any) => {
-      console.log(e);
       setisLoadingGoogleBtn(false);
     },
     flow: "auth-code",

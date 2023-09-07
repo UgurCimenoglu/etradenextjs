@@ -1,5 +1,6 @@
 "use client";
 import CampaignProducts from "@/components/CampaignProducts";
+import CircularProgressIcon from "@/components/CircularProgress";
 import HomeCarousel from "@/components/HomeCarousel";
 import MostPreferredProducts from "@/components/MostPreferredProducts";
 import { GetProducts } from "@/services/Products";
@@ -8,7 +9,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const Home = () => {
-  const { mutate, data, isLoading } = useMutation(GetProducts, {
+  const { mutate, data, isLoading, isError } = useMutation(GetProducts, {
     onError: () => {
       toast.error("Ürünler Listelendirken Hata Meydana Geldi");
     },
@@ -24,8 +25,13 @@ const Home = () => {
   return (
     <>
       <HomeCarousel />
-      <CampaignProducts products={data?.products} />
-      <MostPreferredProducts products={data?.products} />
+      {isLoading && <CircularProgressIcon sx={{ width: "100%" }} />}
+      {data && (
+        <>
+          <CampaignProducts products={data?.products} />
+          <MostPreferredProducts products={data?.products} />
+        </>
+      )}
     </>
   );
 };

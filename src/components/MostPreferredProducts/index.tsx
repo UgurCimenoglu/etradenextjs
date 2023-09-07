@@ -15,8 +15,6 @@ import CustomPaper from "../CustomPaper";
 import { Container } from "@mui/material";
 import { List_Product } from "@/contracts/products/list_product";
 
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 type Props = {
   products: List_Product[] | undefined;
 };
