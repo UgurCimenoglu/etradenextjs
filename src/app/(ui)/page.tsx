@@ -25,7 +25,9 @@ const Home = () => {
   return (
     <>
       <HomeCarousel />
-      {isLoading && <CircularProgressIcon sx={{ width: "100%" }} />}
+      {isLoading && (
+        <CircularProgressIcon sx={{ width: "100%", display: "flex",margin:"auto",marginTop:"2rem" }} />
+      )}
       {data && (
         <>
           <CampaignProducts products={data?.products} />
