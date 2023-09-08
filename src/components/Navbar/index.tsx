@@ -79,7 +79,7 @@ export default function SearchAppBar() {
           >
             <DarkModeToggle />
             {status === "authenticated" && <ShoppingCartToggle />}
-            <Link href={"/admin/Products"}>
+            <Link href={"/admin/login"}>
               <Button color="inherit">Admin Paneli</Button>
             </Link>
             {status === "loading" && <CircularProgress color="inherit" />}
