@@ -78,13 +78,12 @@ export default function SearchAppBar() {
             }}
           >
             <DarkModeToggle />
-
             {status === "authenticated" && <ShoppingCartToggle />}
+            <Link href={"/admin/Products"}>
+              <Button color="inherit">Admin Paneli</Button>
+            </Link>
             {status === "loading" && <CircularProgress color="inherit" />}
             {status === "authenticated" && <RightContent />}
-            <Link href={"/admin/Products"}>
-                <Button color="inherit">Admin Paneli</Button>
-              </Link>
             {status === "unauthenticated" && (
               <Link href={"/login"}>
                 <Button color="inherit">Giriş Yap</Button>
