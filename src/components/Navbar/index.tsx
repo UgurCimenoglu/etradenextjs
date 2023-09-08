@@ -78,24 +78,13 @@ export default function SearchAppBar() {
             }}
           >
             <DarkModeToggle />
+
             {status === "authenticated" && <ShoppingCartToggle />}
-            {/* <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              {status === "loading" ? (
-                <CircularProgress color="inherit" />
-              ) : status === "authenticated" ? (
-                <AccountCircle onClick={HandleLogOut} />
-              ) : (
-                <Link href={"/login"}>Giriş Yap</Link>
-              )}
-            </IconButton> */}
             {status === "loading" && <CircularProgress color="inherit" />}
             {status === "authenticated" && <RightContent />}
+            <Link href={"/admin/Products"}>
+                <Button color="inherit">Admin Paneli</Button>
+              </Link>
             {status === "unauthenticated" && (
               <Link href={"/login"}>
                 <Button color="inherit">Giriş Yap</Button>
